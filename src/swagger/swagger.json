@@ -46,8 +46,40 @@
               "description": "Internal server error",
               "content": {}
             }
+          }
+        }
+      },
+      "/users/admin": {
+        "post": {
+          "tags": [
+            "Admin"
+          ],
+          "description": "Register admin...",
+          "requestBody": {
+            "description": "Register admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "required": false
           },
-          "x-codegen-request-body-name": "Register new name"
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          }
         }
       }
     },

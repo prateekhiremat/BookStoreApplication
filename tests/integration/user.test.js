@@ -56,6 +56,60 @@ describe('User APIs Test', () => {
         expect(res.body.success).toBe(false);
     });
 
+    it('should not register user', async () => {
+      const res = await request(app)
+        .post('/api/users')
+        .send({
+          fullName: 'Prateek S Hiremath',
+          phoneNumber: '1234567890',
+          email: '',
+          password: 'Prateek@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should not register user', async () => {
+      const res = await request(app)
+        .post('/api/users')
+        .send({
+          fullName: 'Prateek S Hiremath',
+          phoneNumber: '1234567890',
+          email: 'prateek.s.hiremath123@gmail.com',
+          password: 'Prateek@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe('User Registration', () => {
+    it('should register user', async () => {
+      const res = await request(app)
+        .post('/api/users')
+        .send({
+          fullName: 'Anush S Hiremath',
+          phoneNumber: '6547893210',
+          email: 'anush@gmail.com',
+          password: 'Anush@123'
+        })
+        expect(res.status).toBe(201);
+        expect(res.body.success).toBe(true);
+    });
+
+    it('should not register user', async () => {
+      const res = await request(app)
+        .post('/api/users')
+        .send({
+          fullName: 'Prateek S Hiremath',
+          phoneNumber: '123456789',
+          email: 'prateek.s.hiremath123@gmail.com',
+          password: 'Prateek@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
     it('should register user', async () => {
       const res = await request(app)
         .post('/api/users')
