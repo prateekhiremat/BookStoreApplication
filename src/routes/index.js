@@ -1,16 +1,16 @@
 import express from 'express';
+import userRoute from './user.route';
+
 const router = express.Router();
 
-import userRoute from './user.route';
 /**
  * Function contains Application routes
  *
  * @returns router
  */
 const routes = () => {
-  router.get('/', (req, res) => {
-    res.json('Welcome');
-  });
+  
+  /* Route to Create a User */
   router.use('/users', userRoute);
 
   return router;

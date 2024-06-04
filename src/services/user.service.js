@@ -1,39 +1,16 @@
 import User from '../models/user.model';
+import bcrypt from 'bcrypt'
 
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
-  return data;
-};
-
-//create new user
-export const newUser = async (body) => {
-  const data = await User.create(body);
-  return data;
-};
-
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
-    }
-  );
-  return data;
-};
-
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
-
-//get single user
-export const getUser = async (id) => {
-  const data = await User.findById(id);
-  return data;
+export const userRegistration = async (body) => {
+  body.email = body.email.toLowerCase()
+  await User.findOne({email: body.email})
+    .then(async(user) => {
+      if(user !== null)
+        throw new Error('User Already Registered');
+      return bcrypt.hash(body.password, 5);
+    })
+    .then(async(hashedPassword) => {
+      body.password = hashedPassword;
+      await User.create(body);
+    })
 };

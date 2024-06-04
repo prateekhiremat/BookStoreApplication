@@ -1,0 +1,82 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Book-Store",
+      "description": "This is a Book Store Application where you can buy books at a discounted price"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000/api/"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Book Store App using express CLI",
+        "description": "This is a Book Store Application"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "description": "Register user...",
+          "requestBody": {
+            "description": "Register user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          },
+          "x-codegen-request-body-name": "Register new name"
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "fullName": {
+              "type": "string"
+            },
+            "phoneNumber": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+      "securitySchemes": {
+        "JWT": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header"
+        }
+      }
+    }
+    }
+}
