@@ -49,6 +49,44 @@
           }
         }
       },
+      "/users/verify": {
+        "post": {
+          "tags": [
+            "User"
+          ],
+          "description": "Verify user email...",
+          "requestBody": {
+            "description": "Verify user email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyUser"
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      },
       "/users/admin": {
         "post": {
           "tags": [
@@ -98,6 +136,14 @@
               "type": "string"
             },
             "password": {
+              "type": "string"
+            }
+          }
+        },
+        "VerifyUser": {
+          "type":"object",
+          "properties":{
+            "token": {
               "type": "string"
             }
           }

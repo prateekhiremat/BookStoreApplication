@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 
 import app from '../../src/index';
 
+let userRegistrationToken;
+
 describe('User APIs Test', () => {
   beforeAll((done) => {
     const clearCollections = () => {
@@ -30,18 +32,6 @@ describe('User APIs Test', () => {
   });
 
   describe('User Registration', () => {
-    it('should register user', async () => {
-      const res = await request(app)
-        .post('/api/users')
-        .send({
-          fullName: 'Prateek S Hiremath',
-          phoneNumber: '1234567890',
-          email: 'prateek.s.hiremath123@gmail.com',
-          password: 'Prateek@123'
-        })
-        expect(res.status).toBe(201);
-        expect(res.body.success).toBe(true);
-    });
 
     it('should not register user', async () => {
       const res = await request(app)
@@ -69,7 +59,7 @@ describe('User APIs Test', () => {
         expect(res.body.success).toBe(false);
     });
 
-    it('should not register user', async () => {
+    it('should register user', async () => {
       const res = await request(app)
         .post('/api/users')
         .send({
@@ -78,62 +68,28 @@ describe('User APIs Test', () => {
           email: 'prateek.s.hiremath123@gmail.com',
           password: 'Prateek@123'
         })
-        expect(res.status).toBe(400);
-        expect(res.body.success).toBe(false);
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+        userRegistrationToken = res.body.token;
     });
   });
 
-  describe('User Registration', () => {
-    it('should register user', async () => {
+  describe('User Email Verification', () => {
+    it('should verify email and crate user', async () => {
       const res = await request(app)
-        .post('/api/users')
-        .send({
-          fullName: 'Anush S Hiremath',
-          phoneNumber: '6547893210',
-          email: 'anush@gmail.com',
-          password: 'Anush@123'
-        })
+        .post('/api/users/verify')
+        .set('Authorization', `Bearer ${userRegistrationToken}`)
         expect(res.status).toBe(201);
         expect(res.body.success).toBe(true);
     });
 
-    it('should not register user', async () => {
+    it('should verify email and crate user', async () => {
       const res = await request(app)
-        .post('/api/users')
-        .send({
-          fullName: 'Prateek S Hiremath',
-          phoneNumber: '123456789',
-          email: 'prateek.s.hiremath123@gmail.com',
-          password: 'Prateek@123'
-        })
+        .post('/api/users/verify')
+        .set('Authorization', `Bearer `)
         expect(res.status).toBe(400);
         expect(res.body.success).toBe(false);
     });
 
-    it('should register user', async () => {
-      const res = await request(app)
-        .post('/api/users')
-        .send({
-          fullName: 'Prateek S Hiremath',
-          phoneNumber: '1234567890',
-          email: '',
-          password: 'Prateek@123'
-        })
-        expect(res.status).toBe(400);
-        expect(res.body.success).toBe(false);
-    });
-
-    it('should register user', async () => {
-      const res = await request(app)
-        .post('/api/users')
-        .send({
-          fullName: 'Prateek S Hiremath',
-          phoneNumber: '1234567890',
-          email: 'prateek.s.hiremath123@gmail.com',
-          password: 'Prateek@123'
-        })
-        expect(res.status).toBe(400);
-        expect(res.body.success).toBe(false);
-    });
   });
 });

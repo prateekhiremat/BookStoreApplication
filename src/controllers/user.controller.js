@@ -9,10 +9,26 @@ import * as UserService from '../services/user.service';
  */
 export const userRegistration = async (req, res) => {
   try {
-    await UserService.userRegistration(req.body);
+    const token = await UserService.userRegistration(req.body);
+    res.status(HttpStatus.OK).json({
+      success: true,
+      message: 'Please Verify Your Email',
+      token: `${token}`
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: `${error}`
+    });
+  }
+};
+
+export const userVerification = async (req, res) => {
+  try {
+    await UserService.userVerification(req.email);
     res.status(HttpStatus.CREATED).json({
       success: true,
-      message: 'User created successfully'
+      message: 'User Registered Successfully'
     });
   } catch (error) {
     res.status(HttpStatus.BAD_REQUEST).json({
