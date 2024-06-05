@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import app from '../../src/index';
 
 let userRegistrationToken;
+let adminRegistrationToken;
 
 describe('User APIs Test', () => {
   beforeAll((done) => {
@@ -74,6 +75,49 @@ describe('User APIs Test', () => {
     });
   });
 
+  describe('Admin Registration', () => {
+
+    it('should not register admin', async () => {
+      const res = await request(app)
+        .post('/api/users/admin')
+        .send({
+          fullName: 'Vibhav S Hiremath',
+          phoneNumber: '123456789',
+          email: 'vibhav.s.hiremath123@gmail.com',
+          password: 'Vibhan@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should not register admin', async () => {
+      const res = await request(app)
+        .post('/api/users/admin')
+        .send({
+          fullName: 'Vibhav S Hiremath',
+          phoneNumber: '123456789',
+          email: 'vibhav.s.hiremath123@gmail.com',
+          password: 'Vibhan@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should register admin', async () => {
+      const res = await request(app)
+        .post('/api/users/admin')
+        .send({
+          fullName: 'Vibhav S Hiremath',
+          phoneNumber: '1234567890',
+          email: 'vibhav.s.hiremath123@gmail.com',
+          password: 'Vibhan@123'
+        })
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+        adminRegistrationToken = res.body.token;
+    });
+  });
+
   describe('User Email Verification', () => {
     it('should verify email and crate user', async () => {
       const res = await request(app)
@@ -91,5 +135,14 @@ describe('User APIs Test', () => {
         expect(res.body.success).toBe(false);
     });
 
+    it('should verify email and crate admin', async () => {
+      const res = await request(app)
+        .post('/api/users/verify')
+        .set('Authorization', `Bearer ${adminRegistrationToken}`)
+        expect(res.status).toBe(201);
+        expect(res.body.success).toBe(true);
+    });
+
   });
+  
 });
