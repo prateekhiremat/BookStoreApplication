@@ -23,3 +23,24 @@ export const userRegisterValidator = (req, res, next) => {
     next();
   }
 };
+
+export const userLoginValidator = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string()
+      .regex(/^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/)
+      .message(
+        'password must contain atleast 8 character with one special, number, upper & lowercase character'
+      )
+      .required()
+  });
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: `${error}`
+    });
+  } else {
+    next();
+  }
+};

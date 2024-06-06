@@ -1,5 +1,5 @@
 const role = {
-    USER: 'user',
+    USER: 'customer',
     ADMIN: 'admin'
 }
 

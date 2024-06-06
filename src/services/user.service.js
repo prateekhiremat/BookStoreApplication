@@ -2,7 +2,7 @@ import User from '../models/user.model';
 import bcrypt from 'bcrypt'
 import { getUserCredentials, userRegisterCache } from '../utils/user.redis_cache';
 import sendMail from '../utils/user.email';
-import { generateRegistrationToken } from '../utils/user.token';
+import { generateLoginToken, generateRegistrationToken } from '../utils/user.token';
 
 export const userRegistration = async (body) => {
   body.email = body.email.toLowerCase()
@@ -23,3 +23,18 @@ export const userVerification = async (email) => {
   const userDetails = await getUserCredentials(email);
   await User.create(userDetails);
 }
+
+export const userLogin = async (body) => {
+  body.email = body.email.toLowerCase();
+  const user = await User.findOne({ email: body.email })
+  if (user === null) 
+    throw new Error('Invalid email');
+  const result = await bcrypt.compare(body.password, user.password,);
+  if (result) {
+    const token = await generateLoginToken(user._id, user.role);
+    return { user, token };
+  } 
+  else {
+    throw new Error('Invalid password');
+  }
+};

@@ -37,3 +37,20 @@ export const userVerification = async (req, res) => {
     });
   }
 };
+
+export const userLogin = async (req, res) => {
+  try {
+    const { user, token } = await UserService.userLogin(req.body);
+    res.status(HttpStatus.OK).json({
+      success: true,
+      fullName: user.fullName,
+      message: 'User Loggedin Successfully',
+      token: `${token}`
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: `${error}`
+    });
+  }
+};
