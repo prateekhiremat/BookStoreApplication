@@ -1,160 +1,189 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-      "title": "Book-Store",
-      "description": "This is a Book Store Application where you can buy books at a discounted price"
-    },
-    "servers": [
-      {
-        "url": "http://localhost:5000/api/"
-      }
-    ],
-    "tags": [
-      {
-        "name": "Book Store App using express CLI",
-        "description": "This is a Book Store Application"
-      }
-    ],
-    "paths": {
-      "/users": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "description": "Register user...",
-          "requestBody": {
-            "description": "Register user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Book-Store",
+    "description": "This is a Book Store Application where you can buy books at a discounted price"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Book Store App using express CLI",
+      "description": "This is a Book Store Application"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "description": "Register user...",
+        "requestBody": {
+          "description": "Register user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
               }
-            },
-            "required": false
-          },
-          "responses": {
-            "201": {
-              "description": "User created successfully",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal server error",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/users/verify": {
-        "post": {
-          "tags": [
-            "User"
-          ],
-          "description": "Verify user email...",
-          "requestBody": {
-            "description": "Verify user email",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/VerifyUser"
-                }
-              }
-            },
-            "required": false
-          },
-          "responses": {
-            "201": {
-              "description": "User created successfully",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal server error",
-              "content": {}
             }
           },
-          "security": [
-            {
-              "JWT": []
-            }
-          ]
-        }
-      },
-      "/users/admin": {
-        "post": {
-          "tags": [
-            "Admin"
-          ],
-          "description": "Register admin...",
-          "requestBody": {
-            "description": "Register admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            },
-            "required": false
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {}
           },
-          "responses": {
-            "201": {
-              "description": "User created successfully",
-              "content": {}
-            },
-            "400": {
-              "description": "Bad Request",
-              "content": {}
-            },
-            "500": {
-              "description": "Internal server error",
-              "content": {}
-            }
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
           }
         }
       }
     },
-    "components": {
-      "schemas": {
-        "User": {
-          "type": "object",
-          "properties": {
-            "fullName": {
-              "type": "string"
-            },
-            "phoneNumber": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            }
+    "/users/verify": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Verify user email...",
+        "responses": {
+          "201": {
+            "description": "User verified successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
           }
         },
-        "VerifyUser": {
-          "type":"object",
-          "properties":{
-            "token": {
-              "type": "string"
-            }
+        "security": [
+          {
+            "BearerAuth": []
           }
+        ]
+      }
+    },
+    "/users/admin": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Register admin...",
+        "requestBody": {
+          "description": "Register admin",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": false
         },
-      "securitySchemes": {
-        "JWT": {
+        "responses": {
+          "201": {
+            "description": "Admin created successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "User Login...",
+        "requestBody": {
+          "description": "User Login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "JWT": {
           "type": "apiKey",
           "name": "Authorization",
           "in": "header"
         }
-      }
     }
-    }
+  }
 }

@@ -5,6 +5,7 @@ import app from '../../src/index';
 
 let userRegistrationToken;
 let adminRegistrationToken;
+let userLoginToken;
 
 describe('User APIs Test', () => {
   beforeAll((done) => {
@@ -40,7 +41,7 @@ describe('User APIs Test', () => {
         .send({
           fullName: 'Prateek S Hiremath',
           phoneNumber: '123456789',
-          email: 'prateek.s.hiremath123@gmail.com',
+          email: 'prateek123@gmail.com',
           password: 'Prateek@123'
         })
         expect(res.status).toBe(400);
@@ -127,7 +128,7 @@ describe('User APIs Test', () => {
         expect(res.body.success).toBe(true);
     });
 
-    it('should verify email and crate user', async () => {
+    it('should verify email and should not crate user', async () => {
       const res = await request(app)
         .post('/api/users/verify')
         .set('Authorization', `Bearer `)
@@ -142,7 +143,43 @@ describe('User APIs Test', () => {
         expect(res.status).toBe(201);
         expect(res.body.success).toBe(true);
     });
+  });
 
+  describe('User Login', () => {
+
+    it('should not login user', async () => {
+      const res = await request(app)
+        .post('/api/users/login')
+        .send({
+          email: 'unknown@gmail.com',
+          password: 'Unknown@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should not login user', async () => {
+      const res = await request(app)
+        .post('/api/users/login')
+        .send({
+          email: '',
+          password: 'Prateek@123'
+        })
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+
+    it('should login user', async () => {
+      const res = await request(app)
+        .post('/api/users/login')
+        .send({
+          email: 'prateek.s.hiremath123@gmail.com',
+          password: 'Prateek@123'
+        })
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+        userLoginToken = res.body.token;
+    });
   });
   
 });
