@@ -7,6 +7,7 @@ import * as UserService from '../services/user.service';
  * @param {object} res - response object
  * @param {Function} next
  */
+
 export const userRegistration = async (req, res) => {
   try {
     const token = await UserService.userRegistration(req.body);

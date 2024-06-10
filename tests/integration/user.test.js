@@ -6,6 +6,7 @@ import app from '../../src/index';
 let userRegistrationToken;
 let adminRegistrationToken;
 let userLoginToken;
+let bookId;
 
 describe('User APIs Test', () => {
   beforeAll((done) => {
@@ -146,7 +147,6 @@ describe('User APIs Test', () => {
   });
 
   describe('User Login', () => {
-
     it('should not login user', async () => {
       const res = await request(app)
         .post('/api/users/login')
@@ -173,12 +173,107 @@ describe('User APIs Test', () => {
       const res = await request(app)
         .post('/api/users/login')
         .send({
-          email: 'prateek.s.hiremath123@gmail.com',
-          password: 'Prateek@123'
+          email: 'vibhav.s.hiremath123@gmail.com',
+          password: 'Vibhan@123'
         })
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);
         userLoginToken = res.body.token;
+    });
+  });
+
+  describe('Adding Book', () => {
+    it('should add book', async () => {
+      const res = await request(app)
+        .post('/api/books')
+        .send({
+          "bookName": "One For All",
+          "author": "Stew Smith",
+          "description": "Destruction of World",
+          "price": "100",
+          "discountPrice": "20",
+          "quantity": "10"
+        })
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        expect(res.status).toBe(201);
+        expect(res.body.success).toBe(true);
+        bookId = res.body.bookId;
+    });
+
+    it('should add book', async () => {
+      const res = await request(app)
+        .post('/api/books')
+        .send({
+          "bookName": "One For All",
+          "author": "Stew Smith",
+          "description": "Destruction of World",
+          "price": "100",
+          "discountPrice": "20",
+          "quantity": "10"
+        })
+        .set('Authorization', '')
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe('Get all Books', () => {
+    it('should get all books', async () => {
+      const res = await request(app)
+        .get('/api/books')
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+    });
+
+    it('should not fetch all books', async () => {
+      const res = await request(app)
+        .get('/api/books')
+        .set('Authorization', '')
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe('Get Book', () => {
+    it('should get book', async () => {
+      const res = await request(app)
+        .get(`/api/books/${bookId}`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+    });
+
+    it('should not fetch book', async () => {
+      const res = await request(app)
+        .get(`/api/books/${bookId}`)
+        .set('Authorization', '')
+        expect(res.status).toBe(400);
+        expect(res.body.success).toBe(false);
+    });
+  });
+
+  describe('Update Book', () => {
+    it('should update book', async () => {
+      const res = await request(app)
+        .put(`/api/books/${bookId}`)
+        .send({
+          "bookName": "All for One",
+          "description": "Manga",
+        })
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
+    });
+  });
+
+  describe('Delete Book', () => {
+    it('should delete book', async () => {
+      const res = await request(app)
+        .get(`/api/books/${bookId}`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        expect(res.status).toBe(200);
+        expect(res.body.success).toBe(true);
     });
   });
   
