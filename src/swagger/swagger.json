@@ -141,7 +141,192 @@
           }
         }
       }
-    }
+    },
+    "/books/":{
+      "post": {
+        "tags":[
+          "Book"
+        ],
+        "description": "Adding Book...",
+        "requestBody": {
+          "description": "Adding Book",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Book created successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "get": {
+        "tags":[
+          "Book"
+        ],
+        "description": "Adding Book...",
+        "requestBody": {
+          "description": "Adding Book",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Books fetched successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/books/{_id}": {
+        "get": {
+          "tags": [
+            "Book"
+          ],
+          "summary": "Get a single book by it's id",
+          "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "book fetched successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Book"
+          ],
+          "summary": "delete a single book by it's id",
+          "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "book deleted successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Book"
+          ],
+          "summary": "update a single book by it's id",
+          "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "update book",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "book updated successfully",
+              "content": {}
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {}
+            },
+            "500": {
+              "description": "Internal server error",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "JWT": []
+            }
+          ]
+        }
+      }
   },
   "components": {
     "schemas": {
@@ -169,6 +354,29 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "bookName": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "discountPrice": {
+            "type": "string"
+          },
+          "quantity": {
             "type": "string"
           }
         }
