@@ -21,6 +21,7 @@
         "tags": [
           "Customer"
         ],
+        "summary": "Customer can register here",
         "description": "Register user...",
         "requestBody": {
           "description": "Register user",
@@ -54,6 +55,7 @@
         "tags": [
           "User"
         ],
+        "summary": "User verification for email",
         "description": "Verify user email...",
         "responses": {
           "201": {
@@ -81,6 +83,7 @@
         "tags": [
           "Admin"
         ],
+        "summary": "Registration for admin",
         "description": "Register admin...",
         "requestBody": {
           "description": "Register admin",
@@ -114,6 +117,7 @@
         "tags": [
           "User"
         ],
+        "summary": "User can login here",
         "description": "User Login...",
         "requestBody": {
           "description": "User Login",
@@ -147,6 +151,7 @@
         "tags":[
           "Book"
         ],
+        "summary": "Add book",
         "description": "Adding Book...",
         "requestBody": {
           "description": "Adding Book",
@@ -183,9 +188,10 @@
         "tags":[
           "Book"
         ],
-        "description": "Adding Book...",
+        "summary":"Get all books",
+        "description": "Getting Books...",
         "requestBody": {
-          "description": "Adding Book",
+          "description": "Getting Books",
           "required": false
         },
         "responses": {
@@ -249,7 +255,7 @@
           "tags": [
             "Book"
           ],
-          "summary": "delete a single book by it's id",
+          "summary": "Delete a single book by it's id",
           "parameters": [
             {
               "name": "_id",
@@ -284,7 +290,7 @@
           "tags": [
             "Book"
           ],
-          "summary": "update a single book by it's id",
+          "summary": "Update a single book by it's id",
           "parameters": [
             {
               "name": "_id",
@@ -326,6 +332,120 @@
             }
           ]
         }
+      },
+      "/carts": {
+        "get": {
+        "tags":[
+          "Cart"
+        ],
+        "summary":"Get cart",
+        "description": "Getting Cart...",
+        "requestBody": {
+          "description": "Getting Cart",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Cart fetched successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/carts/{_id}": {
+        "put": {
+        "tags":[
+          "Cart"
+        ],
+        "summary":"Add book to cart",
+        "description": "Adding Books to Cart...",
+        "requestBody": {
+          "description": "Adding Books to Cart",
+          "required": false
+        },
+        "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book added to cart successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags":[
+          "Cart"
+        ],
+        "summary":"Remove book from cart",
+        "description": "Remove Book from Cart...",
+        "requestBody": {
+          "description": "Remove Book from Cart",
+          "required": false
+        },
+        "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book removed from cart successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
       }
   },
   "components": {

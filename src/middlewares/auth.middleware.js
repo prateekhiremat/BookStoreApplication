@@ -74,3 +74,24 @@ export const adminVerification = async (req, res, next) => {
     });
   }
 };
+
+export const cartVerification = async (req, res, next) => {
+  try {
+    let bearerToken = req.header('Authorization');
+    if (!bearerToken)
+      throw {
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Please Register Once Again'
+      };
+    bearerToken = bearerToken.split(' ')[1];
+
+    const { _id } = await jwt.verify(bearerToken, secretLoginKey);
+    req.body._id = _id;
+    next();
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: `${error}`
+    });
+  }
+};
