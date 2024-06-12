@@ -11,8 +11,28 @@
   ],
   "tags": [
     {
-      "name": "Book Store App using express CLI",
-      "description": "This is a Book Store Application"
+      "name": "User",
+      "description": "This is API for user"
+    },
+    {
+      "name": "Cart",
+      "description": "This is API for Cart"
+    },
+    {
+      "name": "Admin",
+      "description": "This is API for Admin"
+    },
+    {
+      "name": "Customer",
+      "description": "This is API for Customer"
+    },
+    {
+      "name": "Book",
+      "description": "This is API for Book"
+    },
+    {
+      "name": "WishList",
+      "description": "This is API for Wishlist"
     }
   ],
   "paths": {
@@ -429,6 +449,80 @@
         "responses": {
           "200": {
             "description": "Book removed from cart successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/wishLists": {
+        "get": {
+        "tags":[
+          "WishList"
+        ],
+        "summary":"Get wishLists",
+        "description": "Getting wishList...",
+        "requestBody": {
+          "description": "Getting wishList",
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "WishList fetched successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/wishLists/{_id}": {
+        "put": {
+        "tags":[
+          "WishList"
+        ],
+        "summary":"Add book to WishList",
+        "description": "Adding Books to WishList...",
+        "requestBody": {
+          "description": "Adding Books to WishLists",
+          "required": false
+        },
+        "parameters": [
+            {
+              "name": "_id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book added to WishLists successfully",
             "content": {}
           },
           "400": {
