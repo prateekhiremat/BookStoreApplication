@@ -33,6 +33,10 @@
     {
       "name": "WishList",
       "description": "This is API for Wishlist"
+    },
+    {
+      "name": "Order",
+      "description": "This is API for Order"
     }
   ],
   "paths": {
@@ -52,7 +56,7 @@
               }
             }
           },
-          "required": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -114,7 +118,7 @@
               }
             }
           },
-          "required": false
+          "required": true
         },
         "responses": {
           "201": {
@@ -148,7 +152,7 @@
               }
             }
           },
-          "required": false
+          "required": true
         },
         "responses": {
           "200": {
@@ -182,7 +186,7 @@
               }
             }
           },
-          "required": false
+          "required": true
         },
         "responses": {
           "200": {
@@ -210,10 +214,6 @@
         ],
         "summary":"Get all books",
         "description": "Getting Books...",
-        "requestBody": {
-          "description": "Getting Books",
-          "required": false
-        },
         "responses": {
           "200": {
             "description": "Books fetched successfully",
@@ -330,7 +330,7 @@
                 }
               }
             },
-            "required": false
+            "required": true
           },
           "responses": {
             "200": {
@@ -360,10 +360,6 @@
         ],
         "summary":"Get cart",
         "description": "Getting Cart...",
-        "requestBody": {
-          "description": "Getting Cart",
-          "required": false
-        },
         "responses": {
           "200": {
             "description": "Cart fetched successfully",
@@ -392,10 +388,6 @@
         ],
         "summary":"Add book to cart",
         "description": "Adding Books to Cart...",
-        "requestBody": {
-          "description": "Adding Books to Cart",
-          "required": false
-        },
         "parameters": [
             {
               "name": "_id",
@@ -432,10 +424,6 @@
         ],
         "summary":"Remove book from cart",
         "description": "Remove Book from Cart...",
-        "requestBody": {
-          "description": "Remove Book from Cart",
-          "required": false
-        },
         "parameters": [
             {
               "name": "_id",
@@ -474,10 +462,6 @@
         ],
         "summary":"Get wishLists",
         "description": "Getting wishList...",
-        "requestBody": {
-          "description": "Getting wishList",
-          "required": false
-        },
         "responses": {
           "200": {
             "description": "WishList fetched successfully",
@@ -506,10 +490,6 @@
         ],
         "summary":"Add book to WishList",
         "description": "Adding Books to WishList...",
-        "requestBody": {
-          "description": "Adding Books to WishLists",
-          "required": false
-        },
         "parameters": [
             {
               "name": "_id",
@@ -540,7 +520,74 @@
           }
         ]
       }
+    },
+    "/orders": {
+        "post": {
+        "tags":[
+          "Order"
+        ],
+        "summary":"Get Orders",
+        "description": "Getting orders...",
+        "responses": {
+          "200": {
+            "description": "Orders fetched successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
       }
+    },
+    "/customerDetails": {
+        "post": {
+        "tags":[
+          "CustomerDetails"
+        ],
+        "summary":"Get customerDetails",
+        "description": "Getting customerDetails...",
+        "requestBody": {
+          "description": "Set customerDetails",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerDetails"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "CustomerDetails saved successfully",
+            "content": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {}
+          }
+        },
+        "security":[
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
   },
   "components": {
     "schemas": {
@@ -591,6 +638,37 @@
             "type": "string"
           },
           "quantity": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerDetails": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "address":{
+            "type": "object",
+            "properties": {
+            "street": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "postalCode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          },
+          "contact": {
             "type": "string"
           }
         }

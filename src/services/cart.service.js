@@ -8,7 +8,7 @@ export const getCart = async (cartOwner) => {
     return cart;
 }
 
-const cartList = async (cartOwner) => {
+export const cartList = async (cartOwner) => {
     return await Cart.findOne({ cartOwner }).populate({
         path: 'books.bookId',
         select: 'bookName author description price discountPrice bookImage'
