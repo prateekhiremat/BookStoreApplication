@@ -11,7 +11,7 @@ import * as OrderService from '../services/order.service';
 export const setOrderDetails = async (req, res) => {
     try {
       const order = await OrderService.setOrderDetails(req.body._id);
-      res.status(HttpStatus.CREATED).json({
+      res.status(HttpStatus.OK).json({
         success: true,
         message: 'Please set User details',
         link: 'http://localhost:5000/api/customerDetails',

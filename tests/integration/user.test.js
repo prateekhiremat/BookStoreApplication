@@ -267,10 +267,100 @@ describe('User APIs Test', () => {
     });
   });
 
+  describe('GET http://localhost:5000/api/carts/', () => {
+    it('Cart is empty', async () => {
+      const res = await request(app)
+        .get(`/api/carts`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('PUT http://localhost:5000/api/cart/${bookId}', () => {
+    it('Add books to Cart based on books Id', async () => {
+      const res = await request(app)
+        .put(`/api/carts/${bookId}`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(201);
+    });
+
+    it('Get Cart based on User Id', async () => {
+      const res = await request(app)
+        .get(`/api/carts`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(200);
+    });
+  });
+
+  
+  describe('GET http://localhost:5000/api/wishLists', () => {
+    it('Empty wish list', async () => {
+      const res = await request(app)
+        .get(`/api/wishLists`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('PUT http://localhost:5000/api/wishlists/${bookId}', () => {
+    it('Togle books from Wishlist based on books Id', async () => {
+      const res = await request(app)
+        .put(`/api/wishLists/${bookId}`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(200);
+    });
+
+    it('get wishlist', async () => {
+      const res = await request(app)
+        .get(`/api/wishLists`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(200);
+    });
+  });
+
+  describe('GET http://localhost:5000/api/orders', () => {
+    it('Get Order based on User Id', async () => {
+      const res = await request(app)
+        .post(`/api/orders`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(200);
+    });
+  });
+
+  describe('POST http://localhost:5000/api/customerDetails', () => {
+    it('Add customer-details of User', async () => {
+      const res = await request(app)
+        .post(`/api/customerDetails`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+        .send({
+          fullName: 'Vishwas',
+          contact: "6956956955",
+          address:
+            {
+              "street": "string",
+              "city": "string",
+              "state": "string",
+              "postalCode": "561",
+              "country": "string"
+            }
+        });
+      expect(res.status).toBe(201);
+    });
+  });
+
+  describe('DELETE http://localhost:3000/api/carts/${bookId}', () => {
+    it('Remove books from Cart based on books Id', async () => {
+      const res = await request(app)
+        .delete(`/api/carts/${bookId}`)
+        .set('Authorization', `Bearer ${userLoginToken}`)
+      expect(res.status).toBe(400);
+    });
+  });
+
   describe('Delete Book', () => {
     it('should delete book', async () => {
       const res = await request(app)
-        .get(`/api/books/${bookId}`)
+        .delete(`/api/books/${bookId}`)
         .set('Authorization', `Bearer ${userLoginToken}`)
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);

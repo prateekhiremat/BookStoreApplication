@@ -24,7 +24,7 @@ const customerDetailsSchema = new Schema(
             required: true
           },
           postalCode: {
-            type: String,
+            type: Number,
             required: true
           },
           country: {
@@ -33,7 +33,7 @@ const customerDetailsSchema = new Schema(
           }
       },
       contact: {
-        type: String,
+        type: Number,
         required: true
       }
     }

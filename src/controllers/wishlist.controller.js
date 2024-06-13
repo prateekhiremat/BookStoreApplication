@@ -11,7 +11,7 @@ import * as WishListService from '../services/wishlist.service';
 export const getWishList = async (req, res) => {
     try {
       const bookId = await WishListService.getWishlist(req.body._id);
-      res.status(HttpStatus.CREATED).json({
+      res.status(HttpStatus.OK).json({
         success: true,
         message: 'WishList fetched successfully',
         bookId
@@ -27,13 +27,12 @@ export const getWishList = async (req, res) => {
 export const toggleWishList = async (req, res) => {
   try {
     const wishlist = await WishListService.toggleWishList(req.body._id, req.params._id);
-    res.status(HttpStatus.CREATED).json({
+    res.status(HttpStatus.OK).json({
       success: true,
       message: 'WishList successfully',
       wishlist
     });
   } catch (error) {
-    console.log(error)
     res.status(HttpStatus.BAD_REQUEST).json({
       success: false,
       message: `${error}`

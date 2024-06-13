@@ -11,7 +11,7 @@ import * as CartService from '../services/cart.service';
 export const getCart = async (req, res) => {
     try {
       const bookId = await CartService.getCart(req.body._id);
-      res.status(HttpStatus.CREATED).json({
+      res.status(HttpStatus.OK).json({
         success: true,
         message: 'Cart fetched successfully',
         bookId
@@ -43,13 +43,12 @@ export const addBookToCart = async (req, res) => {
 export const removeBookFromCart = async (req, res) => {
   try {
     const cart = await CartService.removeBookFromCart(req.body._id, req.params._id);
-    res.status(HttpStatus.CREATED).json({
+    res.status(HttpStatus.OK).json({
       success: true,
       message: 'Cart fetched successfully',
       cart
     });
   } catch (error) {
-    console.log(error)
     res.status(HttpStatus.BAD_REQUEST).json({
       success: false,
       message: `${error}`
