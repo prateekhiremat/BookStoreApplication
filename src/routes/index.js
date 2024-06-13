@@ -3,6 +3,8 @@ import userRoute from './user.route';
 import bookRoute from './book.route';
 import cartRoute from './cart.route';
 import wishListRoute from './wishlist.route';
+import orderRoute from './order.route';
+import customerDetailsRoute from './customerDetails.route';
 
 const router = express.Router();
 
@@ -13,7 +15,6 @@ const router = express.Router();
  */
 const routes = () => {
   
-  /* Route to Create a User */
   router.use('/users', userRoute);
 
   router.use('/books', bookRoute);
@@ -21,6 +22,10 @@ const routes = () => {
   router.use('/carts', cartRoute);
 
   router.use('/wishLists', wishListRoute);
+
+  router.use('/orders', orderRoute);
+
+  router.use('/customerDetails', customerDetailsRoute);
 
   return router;
 };
