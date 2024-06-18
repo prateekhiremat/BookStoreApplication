@@ -55,3 +55,20 @@ export const userLogin = async (req, res) => {
     });
   }
 };
+
+export const userGoogleLogin = async (req, res) => {
+  try {
+    const { user, token } = await UserService.userGoogleLogin(res.locals.email);
+    res.status(HttpStatus.OK).json({
+      success: true,
+      fullName: user.fullName,
+      message: 'User Loggedin Successfully',
+      token: `${token}`
+    });
+  } catch (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: `${error}`
+    });
+  }
+};

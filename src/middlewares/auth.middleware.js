@@ -1,5 +1,6 @@
 import HttpStatus from 'http-status-codes';
 import jwt from 'jsonwebtoken';
+const passport = require('passport');
 
 const secretRegistrationKey = process.env.SECRET_REGISTRATION_KEY;
 const secretLoginKey = process.env.SECRET_LOGIN_KEY;
@@ -112,4 +113,19 @@ export const customerDetailsAuth = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const googleAuth = async (req, res, next) => {
+  passport.authenticate('google', async (err, user) => {
+    console.log('err',err);
+    console.log('user',user)
+    if (err) {
+      throw new Error('Authentication failed');
+    }
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    res.locals.email = user.email;
+    next();
+  })(req, res, next);
 };
