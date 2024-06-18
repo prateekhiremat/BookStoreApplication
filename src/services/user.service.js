@@ -15,7 +15,7 @@ export const userRegistration = async (body) => {
   const token = await generateRegistrationToken(body.email)
   const subject = 'Please Click here to Verify';
   const message = `<h1>http://localhost:5000/api/users/verify</h1>\n${token}`;
-  // sendMail(body.email, subject, message);
+  sendMail(body.email, subject, message);
   return token;
 };
 
@@ -37,4 +37,12 @@ export const userLogin = async (body) => {
   else {
     throw new Error('Invalid password');
   }
+};
+
+export const userGoogleLogin = async (email) => {
+  const user = await User.findOne({ email })
+  if (user === null) 
+    throw new Error('Invalid email');
+    const token = await generateLoginToken(user._id, user.role);
+    return { user, token };
 };

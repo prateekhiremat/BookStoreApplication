@@ -19,11 +19,16 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDoc from './swagger/swagger.json';
 
+const passport = require('./config/passport');
+
 const app = express();
 const host = process.env.APP_HOST;
 const port = process.env.APP_PORT;
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
+// Initialize Passport and restore authentication state, if any, from the session
+app.use(passport.initialize());
 
 app.use(cors());
 app.use(helmet());
